@@ -8,3 +8,5 @@ if __name__ == '__main__':
                         config.access_token_key, config.access_token_secret,
                         config.whitelist, config.mailto)
     cleaner.run()
+
+""" EOF """

@@ -95,6 +95,10 @@ TwitterCleaner, your Twitter bot.
         message['Subject'] = 'Your daily report for TwitterCleaner'
         message['From'] = self.mailto
         message['To'] = self.mailto
+
+        """Print output, just in case SMTP fails (i.e. no MTA running)"""
+        print "%s" % body
+
         smtp = smtplib.SMTP('localhost')
         smtp.sendmail(self.mailto, [self.mailto], message.as_string())
 
@@ -113,3 +117,5 @@ TwitterCleaner, your Twitter bot.
                 days = (now-time_last_status)/(3600*24)
                 if days > self.max_days:
                     self._delete(f, '%s days ago' %int(days))
+
+""" EOF """

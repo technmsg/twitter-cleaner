@@ -7,5 +7,10 @@ access_token_secret = ''
 # Whitelisted users (optional)
 whitelist = []
 
-# E-mail to received report (optional)
-mailto = None
+# E-mail to received report (recommended)
+mailto = root
+
+# Twitter will reclaim and reissue usernames after 6 months idle
+max_days = 180
+
+# EOF
