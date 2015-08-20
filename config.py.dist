@@ -13,4 +13,10 @@ mailto = root
 # Twitter will reclaim and reissue usernames after 6 months idle
 max_days = 180
 
+# your Twitter handle, required for Lists (in lieu of userid) 
+handle = '@technmsg'
+
+# the slug of the list -- must already exist!
+list_name = 'inactive'
+
 # EOF

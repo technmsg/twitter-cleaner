@@ -53,10 +53,15 @@ class TwitterCleaner(object):
     max_days : integer, optional, default = 30
         The number of days after which a user is considered as inactive,
         i.e. will be removed if no post more recent than this
+    list_name : string, optional
+        The slug (aka short name) of the list to add followees to
+    handle : string, optional (required if list_name is defined)
+        Your Twitter handle, used for adding followees to list
     """
     def __init__(self, consumer_key, consumer_secret, 
                     access_token_key, access_token_secret,
-                    whitelist=None, mailto=None, max_days=30):
+                    whitelist=None, mailto=None, max_days=30,
+                    handle=None, list_name=None):
         self.api = twitter.Api(consumer_key=consumer_key,
                       consumer_secret=consumer_secret,
                       access_token_key=access_token_key,
@@ -64,6 +69,8 @@ class TwitterCleaner(object):
         self.whitelist = whitelist
         self.mailto = mailto
         self.max_days = max_days
+        self.handle = handle
+        self.list_name = list_name
         self.deleted = []
 
     def run(self):
@@ -76,6 +83,11 @@ class TwitterCleaner(object):
         """Effective deletion of Twitter followees."""
         self.api.DestroyFriendship(followee.id)
         self.deleted.append((followee.screen_name, days))
+
+        """Add users to the list"""
+        if self.list_name:
+          # print "adding %s to %s:%s" % (followee.id, self.handle, self.list_name)
+          self.api.CreateListsMember(slug=self.list_name,user_id=followee.id,owner_screen_name=self.handle)
  
     def _email_summary(self):
         """Send summary e-mail."""
@@ -84,6 +96,8 @@ class TwitterCleaner(object):
 The following users had been removed from your followee list:
 
 - %s
+
+They've also been added to your inactive list.
 
 Have an A1 day!
 

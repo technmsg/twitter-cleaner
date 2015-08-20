@@ -6,7 +6,8 @@ import config
 if __name__ == '__main__':
     cleaner = TwitterCleaner(config.consumer_key, config.consumer_secret,
                         config.access_token_key, config.access_token_secret,
-                        config.whitelist, config.mailto)
+                        config.whitelist, config.mailto,
+                        config.max_days, config.handle, config.list_name)
     cleaner.run()
 
 """ EOF """
