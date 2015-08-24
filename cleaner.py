@@ -121,6 +121,12 @@ TwitterCleaner, your Twitter bot.
         for f in self.api.GetFriends(count=200):
             if f.screen_name in self.whitelist:
                 continue
+
+            # skip protected users
+            if f.protected is True:
+                #print "skipping %s (protected)" % f.screen_name
+                continue
+
             if not f.status:
                 self._delete(f, 'None')
             else:
