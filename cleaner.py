@@ -120,6 +120,7 @@ TwitterCleaner, your Twitter bot.
         """Delete followees, unless there's in the whitelist."""
         for f in self.api.GetFriends(count=200):
             if f.screen_name in self.whitelist:
+                print "skipping %s (whitelist)" % f.screen_name
                 continue
 
             # skip protected users
@@ -127,8 +128,10 @@ TwitterCleaner, your Twitter bot.
                 #print "skipping %s (protected)" % f.screen_name
                 continue
 
+            # skip users without status, who likely purged their account
             if not f.status:
-                self._delete(f, 'None')
+                print "skipping %s (no status)" % f.screen_name
+                #self._delete(f, 'None')
             else:
                 last_status = f.status.created_at
                 time_last_status = time.mktime(time.strptime(last_status, 
